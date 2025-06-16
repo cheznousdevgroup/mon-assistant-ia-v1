@@ -1,0 +1,18 @@
+<div class="container mat-typography">
+  <h2 class="text-center mb-4" style="color: #000;">💬 Mon Assistant IA</h2>
+
+  <mat-card class="mb-3" *ngFor="let m of messages">
+    <mat-card-content>
+      <p><strong>👤 Vous :</strong> {{ m.prompt }}</p>
+      <p><strong>🤖 IA :</strong> {{ m.response }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <form (ngSubmit)="sendMessage()" class="d-flex gap-2 mt-3">
+    <mat-form-field class="flex-grow-1" appearance="outline">
+      <mat-label>Message</mat-label>
+      <input matInput [(ngModel)]="newMessage" name="message" required />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Envoyer</button>
+  </form>
+</div>

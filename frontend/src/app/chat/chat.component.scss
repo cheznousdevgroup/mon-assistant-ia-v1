@@ -1,0 +1,36 @@
+.chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.messages {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.mat-mdc-form-field.mat-form-field-animations-enabled .mdc-text-field__input{
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: #000;
+}
+
+.message {
+  margin: 0.5rem 0;
+}
+
+.message.user {
+  text-align: right;
+  color: blue;
+}
+
+.message.assistant {
+  text-align: left;
+  color: green;
+}
+
+.input-form {
+  display: flex;
+  gap: 0.5rem;
+}

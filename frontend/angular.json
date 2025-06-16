@@ -30,6 +30,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/cyan-orange.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
@@ -91,11 +92,17 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "@angular/material/prebuilt-themes/cyan-orange.css",
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "bf4a9525-d679-42e1-80ac-9717d27ce8f6"
   }
 }
