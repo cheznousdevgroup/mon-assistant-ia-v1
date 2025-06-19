@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ChatService } from '../services/chat.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 export interface Message {
   prompt: string;
@@ -26,6 +28,7 @@ export interface Message {
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
@@ -33,6 +36,7 @@ export interface Message {
 export class ChatComponent implements OnInit {
   newMessage: string = '';
   messages: Message[] = [];
+  loading = false;
 
   constructor(private chatService: ChatService) {}
 
@@ -41,25 +45,29 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    const userPrompt = this.newMessage.trim();
-    if (userPrompt) {
+    if (this.newMessage.trim()) {
+      const promptText = this.newMessage;
       const message: Message = {
-        prompt: userPrompt,
+        prompt: promptText,
+        response: '...',
         fromUser: true,
         timestamp: new Date(),
       };
       this.messages.push(message);
       this.newMessage = '';
+      this.loading = true;
 
-      this.chatService.sendMessage(userPrompt).subscribe(
+      this.chatService.sendMessage(promptText).subscribe(
         (res) => {
           const last = this.messages[this.messages.length - 1];
           last.response = res.response;
+          this.loading = false;
         },
         (err) => {
-          console.error(err);
           const last = this.messages[this.messages.length - 1];
-          last.response = '[Erreur lors de la réponse]';
+          last.response = '[Erreur de réponse]';
+          console.error(err);
+          this.loading = false;
         }
       );
     }
