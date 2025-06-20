@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChatComponent } from './chat/chat.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [ChatComponent],
+  template: '<app-chat></app-chat>',
+  styles: [`
+    :host {
+      display: block;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+  `]
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Assistant Llama 4';
 }

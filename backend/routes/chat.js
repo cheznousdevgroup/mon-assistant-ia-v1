@@ -1,36 +1,82 @@
-// point API pour recevoir les questions
-
+// Point API pour recevoir les questions
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const { askOpenAI } = require('../services/ai');
+const aiService = require('../services/ai');
 
-router.post('/', async (req, res) => {
-  const userMessage = req.body.message;
-
-  if (!userMessage) {
-    return res.status(400).json({ error: 'Message requis' });
-  }
-
+// Route pour chat simple
+router.post('/message', async (req, res) => {
   try {
-    const response = await askOpenAI(userMessage);
-    res.json({ response });
+    const { message, conversation = [] } = req.body;
+    
+    const messages = [
+      ...conversation,
+      { role: 'user', content: message }
+    ];
+
+    const response = await aiService.generateResponse(messages);
+    
+    res.json({
+      success: true,
+      response: response,
+      model: 'llama-4'
+    });
   } catch (error) {
-    console.error('Erreur OpenAI:', error);
-    res.status(500).json({ error: 'Erreur lors du traitement avec OpenAI' });
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
   }
 });
 
-// Nouvelle route : historique
-router.get('/history', (req, res) => {
-  db.query('SELECT * FROM messages ORDER BY created_at DESC', (err, results) => {
-    if (err) {
-      console.error('Erreur SQL :', err);
-      res.status(500).json({ error: 'Erreur serveur' });
-    } else {
-      res.json(results);
-    }
-  });
+// Route pour chat avec images (multimodal)
+router.post('/multimodal', async (req, res) => {
+  try {
+    const { message, imageUrl } = req.body;
+    
+    const response = await aiService.generateMultimodalResponse(message, imageUrl);
+    
+    res.json({
+      success: true,
+      response: response,
+      model: 'llama-4-multimodal'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Route pour streaming
+router.post('/stream', async (req, res) => {
+  try {
+    const { message, conversation = [] } = req.body;
+    
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    });
+
+    const messages = [
+      ...conversation,
+      { role: 'user', content: message }
+    ];
+
+    await aiService.generateStreamingResponse(
+      messages,
+      (chunk) => {
+        res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
+      }
+    );
+
+    res.write('data: [DONE]\n\n');
+    res.end();
+  } catch (error) {
+    res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
+    res.end();
+  }
 });
 
 module.exports = router;
