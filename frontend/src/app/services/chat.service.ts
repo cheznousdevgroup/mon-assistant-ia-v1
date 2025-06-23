@@ -2,25 +2,27 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ChatMessage, ChatResponse, PromptTemplate } from '../interfaces';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private apiUrl = 'http://localhost:3000/api/chat';
+  private apiUrl =environment.apiUrl;
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `🚀 Salut ! Je suis votre Assistant Miuuu 1
+      content: `Bonjour, je suis votre assistant Miuuu 1.
 
-Je dispose de capacités avancées :
-• 🖼️ Analyse d'images - Descriptions, OCR, analyse visuelle
-• 💻 Génération de code - Tous langages, debugging, optimisation
-• 📚 Contexte étendu - Jusqu'à 10M tokens (documents très longs)
-• 🧠 Raisonnement multimodal - Texte + image ensemble
-• 🌍 Multilingue - 12 langues supportées
+Je propose des fonctionnalités avancées pour répondre à vos besoins :
 
-Comment puis-je vous aider aujourd'hui ?`,
+• Analyse d’images : description, OCR, compréhension visuelle
+• Génération et correction de code : tous langages, optimisation incluse
+• Traitement de documents longs
+• Raisonnement multimodal : compréhension combinée texte + image
+• Support multilingue : 12 langues disponibles
+
+Comment puis-je vous assister aujourd’hui ?`,
       timestamp: new Date(),
       type: 'text',
     },
