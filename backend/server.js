@@ -1,5 +1,4 @@
 // point d'entrée Express
-
 const express = require('express');
 const cors = require('cors');
 const chatRoutes = require('./routes/chat');
