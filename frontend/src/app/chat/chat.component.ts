@@ -1,17 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatService, ChatMessage, PromptTemplate, LLAMA4_CAPABILITIES } from '../services/chat.service';
 import { Subscription } from 'rxjs';
+import { ChatMessage, LLAMA4_CAPABILITIES, PromptTemplate, QuickAction } from '../interfaces';
+import { ChatService } from '../services';
 
-interface QuickAction {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  action: () => void;
-  category: 'image' | 'code' | 'document' | 'general';
-}
 
 @Component({
   selector: 'app-chat',
