@@ -1,4 +1,4 @@
-# 🤖 Mon Assistant IA (Angular + Node.js + GPT4All)
+# 🤖 Mon Assistant IA (Angular + Node.js + GPT4All or LLAMA(Meta))
 
 Une application web moderne intégrant une interface de **chat intelligent** entre un utilisateur et une IA locale ou en ligne (GPT4All, OpenAI...). Le frontend est développé avec **Angular**, le backend en **Node.js**, et les échanges sont persistés dans une base de données **MySQL**.
 
@@ -6,11 +6,11 @@ Une application web moderne intégrant une interface de **chat intelligent** ent
 
 ## 🧠 Fonctionnalités
 
-- ✅ Interface utilisateur stylée avec **Angular Material**
+- ✅ Interface utilisateur stylée avec **CSS3**
 - 💬 Chat avec l’IA en langage naturel
-- 📜 Historique des conversations
-- 💾 Stockage des messages (prompts + réponses) en base MySQL
-- 🔌 Backend extensible avec support GPT4All ou OpenAI API
+<!-- - 📜 Historique des conversations -->
+<!-- - 💾 Stockage des messages (prompts + réponses) en base MySQL -->
+<!-- - 🔌 Backend extensible avec support GPT4All ou OpenAI API -->
 - ⏳ Affichage d’un **chargeur** pendant que l’IA génère une réponse
 
 ---
